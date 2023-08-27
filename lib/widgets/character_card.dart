@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:rick_and_morty/core/route_utils/route_utils.dart';
 
 import '../core/models/character.dart';
+import '../features/character_details/view.dart';
 
 class CharacterCard extends StatelessWidget {
   const CharacterCard({
@@ -12,46 +14,54 @@ class CharacterCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 500,
-      margin: EdgeInsets.only(bottom: 20),
-      width: MediaQuery.of(context).size.width,
-      alignment: Alignment.bottomCenter,
-      child: UnconstrainedBox(
-        child: Container(
-          height: 100,
-          padding: EdgeInsets.all(20),
-          width: MediaQuery.of(context).size.width - 40,
-          child: Text(
-            character.name,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          decoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.3),
-            borderRadius: BorderRadius.vertical(
-              bottom: Radius.circular(20),
-            ),
-          ),
+    return InkWell(
+      onTap: () => RouteUtils.push(
+        context: context,
+        view: CharacterDetailsView(
+          id: character.id,
         ),
       ),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        image: DecorationImage(
-          image: NetworkImage(character.image),
-          fit: BoxFit.cover,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey,
-            spreadRadius: 1,
-            blurRadius: 6,
+      child: Container(
+        height: 500,
+        margin: EdgeInsets.only(bottom: 20),
+        width: MediaQuery.of(context).size.width,
+        alignment: Alignment.bottomCenter,
+        child: UnconstrainedBox(
+          child: Container(
+            height: 100,
+            padding: EdgeInsets.all(20),
+            width: MediaQuery.of(context).size.width - 40,
+            child: Text(
+              character.name,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.3),
+              borderRadius: BorderRadius.vertical(
+                bottom: Radius.circular(20),
+              ),
+            ),
           ),
-        ],
+        ),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          image: DecorationImage(
+            image: NetworkImage(character.image),
+            fit: BoxFit.cover,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+              spreadRadius: 1,
+              blurRadius: 6,
+            ),
+          ],
+        ),
       ),
     );
   }
